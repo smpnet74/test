@@ -24,7 +24,7 @@ aws.iam.RolePolicyAttachment('lambda-policy',
 )
 
 # Create a new Lambda function
-function = aws.lambda_.Function('my-lambda-function',
+function = aws.lambda_.Function('civo-batch',
     code=pulumi.AssetArchive({
         '.': pulumi.FileArchive('../lambdas/civo/my-deployment-package.zip'),
     }),
