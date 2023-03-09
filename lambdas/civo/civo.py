@@ -36,4 +36,4 @@ def lambda_handler(event, context):
     # Print the full URLs of all the links
     for link in full_links:
         print(link)
-        return(full_links)
+    return(full_links)
