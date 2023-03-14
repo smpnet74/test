@@ -33,3 +33,22 @@ function = aws.lambda_.Function('civo-batch',
     runtime='python3.8',
     timeout=30,
 )
+
+table = aws.dynamodb.Table("interesting_blogs",
+    attributes=[
+        {
+            "name": "company_name",
+            "type": "S",
+        },
+        {
+            "name": "type",
+            "type": "S",
+        },
+    ],
+    hash_key="company_name",
+    range_key="type",
+    billing_mode="PROVISIONED",
+    read_capacity=5,
+    write_capacity=5)
+
+pulumi.export("table_name", table.name)

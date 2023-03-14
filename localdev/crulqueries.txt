@@ -1,0 +1,14 @@
+open https://www.civo.com/blog --cache false || regex /.*(page).*/ || startswith attributes.href 'https://www.civo.com/blog' || sort attributes.href -o "ascending" || head 1
+|| split attributes.href '='  || range 1 $attributes.href.1$ page || open https://www.civo.com/blog?page=$page$ --cache false || unique attributes.href || filter '(parentElement.nodeName == "DIV") and (attributes.href != NULL)' || fnmatch attributes.href "blog" || table attributes.href
+
+open https://humanitec.com/blog --cache false || fnmatch attributes.href "https://humanitec.com/blog" || table attributes.href
+
+open https://www.okteto.com/blog/ --cache false  || filter "parentElement.attributes.class == 'BlogPaginationButtons'" || excludes innerText 'Next' || open $attributes.href$ ||filter "parentElement.nodeName == 'FIGURE'" || table attributes.href
+
+open https://www.openfaas.com/blog/ --cache false  ||filter "attributes.class == 'pagination-list'"  ||split innerText 'of' || range 2 $innerText.1$ page  || open https://www.openfaas.com/blog/$page$/ --labelStage shit || open https://www.openfaas.com/blog --fresh --appendStage shit || filter "parentElement.nodeName == 'H1'" || unique attributes.href  || table attributes.href
+
+open https://blog.dapr.io/posts/ || filter "parentElement.attributes.class == 'collapse show'" || filter "nodeName == 'A'"  || table attributes.href
+
+open https://loft.sh/blog/  || find 'https://loft.sh/blog/page' || sort attributes.href -o "ascending" || head 1 || split attributes.href '/page/' || split attributes.href.1 '/' || range 1 $attributes.href.1.0$ page || open https://loft.sh/blog/page/$page$ ||filter "parentElement.attributes.class == 'blog_item'" || unique innerText || excludes attributes.href 'https://loft.sh/blog/authors/' || table attributes.href
+
+open https://www.cncf.io/sandbox-projects/ || filter "attributes.class == 'project-item__link'" || open $attributes.href$ --filter "attributes.class == 'projects-single-box__link'" || table location.href attributes.href
