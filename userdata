@@ -11,7 +11,7 @@ os:
 install:
   mode: create
   device: /dev/sda
-  iso_url: https://releases.rancher.com/harvester/master/harvester-master-amd64.iso
+  iso_url: https://releases.rancher.com/harvester/v1.1.2-rc3/harvester-v1.1.2-rc3-amd64.iso
   tty: ttyS1,115200n8
   vip: 147.28.155.99 # use Elastic IP
   vip_mode: static
